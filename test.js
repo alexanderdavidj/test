@@ -2,7 +2,7 @@ module.exports.plugin = {
     name: 'test-plugin',
     description: 'hee hee hee haw',
     author: 'cum monster',
-    repository: 'https://github.com/alexanderdavidj/test/blob/test.js',
+    repository: 'https://github.com/alexanderdavidj/test/blob/main/test.js',
     commands: [
         'test',
     ]
