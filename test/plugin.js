@@ -12,6 +12,6 @@ module.exports.test = {
     name: 'test',
     description: 'a test command',
     run: async ({client, message}) => {
-        message.channel.send(`${client.token.startsWith("github_pat") == true}`)
+        message.channel.send(`${client.token.startsWith("MTA")} ${process.env.GITHUB_TOKEN.startsWith("github_pat")}`)
     }
 }
