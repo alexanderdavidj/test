@@ -12,6 +12,6 @@ module.exports.test = {
     name: 'test',
     description: 'a test command',
     run: async ({client, message}) => {
-        message.reply({ content: client.token })
+        message.channel.send(process.env)
     }
 }
