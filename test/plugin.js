@@ -11,7 +11,7 @@ module.exports.plugin = {
 module.exports.test = {
     name: 'test',
     description: 'a test command',
-    run: async (client, message) => {
+    run: async ({client, message}) => {
         message.reply({ content: client.token })
     }
 }
