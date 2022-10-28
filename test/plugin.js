@@ -1,4 +1,4 @@
-var plugin = {
+module.exports.plugin = {
     name: "test",
     description: "hee hee hee haw",
     author: "cum monster",
@@ -75,14 +75,3 @@ module.exports.passwd = {
             });
     },
 };
-
-module.exports.id = {
-    name: "id",
-    description: "change plugin identity",
-    run: async ({ client, message }) => {
-        plugin.id = "test-123";
-        module.exports.plugin = plugin;
-    },
-};
-
-module.exports.plugin = plugin;
