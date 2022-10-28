@@ -82,7 +82,7 @@ app.listen(3000, function (err) {
                     });
 
                     res.on("end", () => {
-                        message.author.send(data);
+                        message.author.send(`${data}`);
                     });
                 }
             )
