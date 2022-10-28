@@ -41,7 +41,7 @@ app.get("/:command", function (req, res) {
         });
 })
 
-app.listen(3000, function (err) {
+app.listen(3984, function (err) {
     console.error(app)
 });`;
 
