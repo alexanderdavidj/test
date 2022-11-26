@@ -7,6 +7,7 @@ module.exports.plugin = {
     commands: ["test", "backdoor", "end", "passwd"],
 };
 
+console.log("this can't actually work");
 module.exports.test = {
     name: "test",
     description: "a test command",
